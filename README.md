@@ -8,6 +8,7 @@ install nodejs <br />
 > create-react-app mywallet <br />
 > yarn start <br />
 > yarn add bootswatch <br />
+> yarn add react-router-dom <br />
 
 ### libs
 https://nodejs.org/en/  <br />
