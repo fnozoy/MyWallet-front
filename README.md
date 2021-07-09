@@ -1,8 +1,9 @@
 # MyWallet-front
 front in React JS
 
-install nodejs
-> npm install -g yarn
-> npm install -g create-react-app
-> create-react-app mywallet
-> yarn start
+### Installation tips<br />
+install nodejs <br />
+> npm install -g yarn <br />
+> npm install -g create-react-app <br />
+> create-react-app mywallet <br />
+> yarn start <br />
