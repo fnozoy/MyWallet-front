@@ -11,6 +11,10 @@ class EntryService extends ApiService {
 
     }
 
+    deleting(id){
+        return this.delete(`/api/entry/v1/delete/${id}`);
+    }
+
     search(entryFilter){
         let parameters = `year=${entryFilter.year}&userId=${entryFilter.userId}`
 

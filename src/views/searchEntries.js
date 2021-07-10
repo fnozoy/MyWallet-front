@@ -6,6 +6,8 @@ import EntriesTable from '../component/entriesTable'
 import { toastrErrorMsg, toastrSuccessMsg } from '../component/toastr'
 import LocalStorageService from '../app/service/localStorageService'
 import EntryService from '../app/service/entryService'
+import { Dialog } from 'primereact/dialog';
+import {Button} from 'primereact/button';
 
 class SearchEntries extends React.Component{
 
@@ -17,7 +19,9 @@ class SearchEntries extends React.Component{
         entryStatus: '',
         description: '',
         userId: '',
-        entries: []
+        entries: [],
+        showConfirmDialog: false,
+        entryToDelete: ''
     }
     
     constructor(){
@@ -57,8 +61,37 @@ class SearchEntries extends React.Component{
                 this.setState({entries: response.data})
             }).catch(error => {
                 console.log("did not retrieve the search")
-                console.error(error.response)
+                console.error(error.response)            
             })
+    }
+
+    deleteRow = () => {
+        this.entryService
+            .deleting(this.state.entryToDelete.id)      
+            .then (response => {                
+
+                const entries = this.state.entries;
+                const index = entries.indexOf(this.state.entryToDelete)
+                entries.splice(index, 1);
+                this.setState( { entries: entries, showConfirmDialog: false } )
+                toastrSuccessMsg('Entry deleted successfully.')
+            })            
+            .catch(error => {
+                toastrErrorMsg('Delete failed!!!')
+            })
+            
+    }
+
+    confirmDelete = (entry) => {
+        this.setState({showConfirmDialog: true, entryToDelete: entry})
+    }
+
+    cancelDelete = (entry) => {
+        this.setState({showConfirmDialog: false, entryToDelete: ''})
+    }
+
+    editRow = (entry) => {
+        console.log('edit ', entry.id)
     }
 
     navigateSearch = () => {
@@ -69,6 +102,14 @@ class SearchEntries extends React.Component{
         const months = this.entryService.getMonthsList();
 
         const entryTypes = this.entryService.getEntryTypes();
+
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirm" icon="pi pi-check" onClick={this.deleteRow} />
+                <Button label="Cancel" icon="pi pi-times" onClick={this.cancelDelete} 
+                        className="p-button-secondary" />
+            </div>
+        );
 
         return (         
         <Card title="Entries">
@@ -119,9 +160,21 @@ class SearchEntries extends React.Component{
             <div className="row">
                 <div className="col-md-12">
                     <div className="bs-component">
-                        <EntriesTable entries={this.state.entries} />
+                        <EntriesTable entries={this.state.entries} 
+                                      editRow={this.editRow}  
+                                      deleteRow={this.confirmDelete}
+                                          
+                        />
                     </div>
                 </div>
+                <Dialog header="Confirmation" 
+                        visible={this.state.showConfirmDialog} 
+                        footer={confirmDialogFooter} 
+                        style={{width: '50vw'}}
+                        modal={true}
+                        onHide={() => this.setState({showConfirmDialog: false})}>
+                         Are you sure you want to proceed?
+                </Dialog>                
             </div>
         </Card>
         )

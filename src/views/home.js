@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import EntryService from '../app/service/entryService';
 import LocalStorageService from '../app/service/localStorageService';
+import currencyFormatter from 'currency-formatter';
 
 class Home extends React.Component{
 
@@ -35,7 +36,7 @@ class Home extends React.Component{
             <div className="jumbotron">
                 <h1 className="display-3">Welcome, {this.state.name}!</h1>
                 <p className="lead">This is your finance system.</p>
-                <p className="lead">You own US$ {this.state.balance} </p>
+                <p className="lead">You own {currencyFormatter.format(this.state.balance, {locale: 'en-US'})} </p>
                 <hr className="my-4" />
                 <p>This your administrative area, use the menu or the buttons below to navigate My Wallet.</p>
                 <p className="lead">
