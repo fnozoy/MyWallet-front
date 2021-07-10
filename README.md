@@ -12,9 +12,14 @@ install nodejs <br />
 > yarn add axios <br />
 > yarn add toastr <br />
 > yarn add currency-formatter <br />
+> yarn add primereact <br />
+> yarn add primeicons <br />
+> 
 
 ### libs
 https://nodejs.org/en/  <br />
 https://reactjs.org/ <br />
 https://bootswatch.com/ <br />
 https://codeseven.github.io/toastr/
+https://primefaces.org/primereact
+https://react-materialize.github.io/
