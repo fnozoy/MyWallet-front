@@ -10,8 +10,10 @@ install nodejs <br />
 > yarn add bootswatch <br />
 > yarn add react-router-dom <br />
 > yarn add axios <br />
+> yarn add toastr <br />
 
 ### libs
 https://nodejs.org/en/  <br />
 https://reactjs.org/ <br />
 https://bootswatch.com/ <br />
+https://codeseven.github.io/toastr/
