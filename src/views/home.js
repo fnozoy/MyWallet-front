@@ -6,7 +6,8 @@ import LocalStorageService from '../app/service/localStorageService';
 class Home extends React.Component{
 
     state = {
-        balance: 0
+        balance: 0,
+        name: ''
     }
 
     constructor(){
@@ -16,7 +17,8 @@ class Home extends React.Component{
 
     componentDidMount(){
         
-        const userLogged = LocalStorageService.getItem('_user_Logged')
+        const userLogged = LocalStorageService.getItem('_user_Logged');
+        this.state.name = userLogged.name;
 
         this.entryService
             .getBalance(userLogged.id)
@@ -31,7 +33,7 @@ class Home extends React.Component{
     render(){
         return(
             <div className="jumbotron">
-                <h1 className="display-3">Welcome!</h1>
+                <h1 className="display-3">Welcome, {this.state.name}!</h1>
                 <p className="lead">This is your finance system.</p>
                 <p className="lead">You own US$ {this.state.balance} </p>
                 <hr className="my-4" />
