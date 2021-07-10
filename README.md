@@ -15,3 +15,4 @@ install nodejs <br />
 https://nodejs.org/en/  <br />
 https://reactjs.org/ <br />
 https://bootswatch.com/ <br />
+https://codeseven.github.io/toastr/
