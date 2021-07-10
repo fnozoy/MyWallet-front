@@ -11,6 +11,7 @@ install nodejs <br />
 > yarn add react-router-dom <br />
 > yarn add axios <br />
 > yarn add toastr <br />
+> yarn add currency-formatter <br />
 
 ### libs
 https://nodejs.org/en/  <br />
