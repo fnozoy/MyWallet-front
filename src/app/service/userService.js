@@ -8,8 +8,14 @@ class UserService extends ApiService {
 
     authenticate(credential){
         return this.post('/v1/authenticate', credential)
+    }
+
+    
+    signup(credential){
+        return this.post('/v1/signup', credential)
 
     }
+
 
 }
 

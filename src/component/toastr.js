@@ -27,7 +27,7 @@ toastr.options = {
   }
 
   export function toastrSuccessMsg(message){
-    toastrMessage('Success', message, 'sucess')
+    toastrMessage('Success', message, 'success')
   }
 
   export function toastrWarningMsg(message){
