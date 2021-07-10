@@ -12,9 +12,8 @@ install nodejs <br />
 > yarn add axios <br />
 > yarn add toastr <br />
 > yarn add currency-formatter <br />
-> yarn add primereact <br />
-> yarn add primeicons <br />
-> 
+yarn add primereact primeicons classnames reac-transition-group <br />
+
 
 ### libs
 https://nodejs.org/en/  <br />
