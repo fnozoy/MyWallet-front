@@ -1,6 +1,8 @@
 import React from 'react';
 import 'bootswatch/dist/slate/bootstrap.css'
 import '../custom.css'
+import 'toastr/build/toastr.min.js'
+import 'toastr/build/toastr.css'
 import Navbar from '../component/navbar'
 import Routes from './routes';
 
@@ -20,3 +22,4 @@ class App extends React.Component{
 }
 
 export default App;
+

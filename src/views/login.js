@@ -2,7 +2,9 @@ import React from 'react';
 import Card from '../component/card'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-
+import UserService from '../app/service/userService';
+import LocalStorageService from '../app/service/localStorageService';
+import { toastrErrorMsg } from '../component/toastr'
 
 class Login extends React.Component{
     state = {
@@ -11,17 +13,23 @@ class Login extends React.Component{
         errorMessage: ''
     }
 
+    constructor(){
+        super();
+        this.userService = new UserService();
+    }
+
     authenticate = () => {
-        axios.post('http://localhost:8080/api/v1/user/authenticate', {
+        this.userService.authenticate({
             id: '',
             name:'',
             email: this.state.email,
             pswd: this.state.pswd
         }).then( response => {
-            localStorage.setItem('_user_logged', JSON.stringify(response.data))
+            console.log(response.data)
+            LocalStorageService.addItem("_user_Logged", response.data)
             this.props.history.push('/home')
-        }).catch(error => {
-            this.setState({errorMessage: error.response.data})
+        }).catch( error => {
+            toastrErrorMsg(error.response.data)
         })
     }
     

@@ -1,7 +1,7 @@
 import React from 'react';
-import Card from '../component/card'
 import { withRouter } from 'react-router-dom'
-import axios from 'axios'
+import EntryService from '../app/service/entryService';
+import LocalStorageService from '../app/service/localStorageService';
 
 class Home extends React.Component{
 
@@ -9,15 +9,23 @@ class Home extends React.Component{
         balance: 0
     }
 
+    constructor(){
+        super();
+        this.entryService = new EntryService();
+    }
+
     componentDidMount(){
-        const userLoggedString = localStorage.getItem('_user_logged')
-        const userLogged = JSON.parse(userLoggedString)
-        axios.get(`http://localhost:8080/api/entry/v1/getbalance/${userLogged.id}`)
-        .then( response => {
-            this.setState({balance: response.data})
-        }).catch(error => {
-            console.log("did not finde the balance")
-        })
+        
+        const userLogged = LocalStorageService.getItem('_user_Logged')
+
+        this.entryService
+            .getBalance(userLogged.id)
+            .then( response => {
+                this.setState({balance: response.data})
+            }).catch(error => {
+                console.log("did not find the balance")
+                console.error(error.response)
+            })
     }
 
     render(){
