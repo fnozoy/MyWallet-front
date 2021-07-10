@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 import SelectMenu from '../component/selectMenu'
 import EntriesTable from '../component/entriesTable'
 import { toastrErrorMsg, toastrSuccessMsg } from '../component/toastr'
-
+import LocalStorageService from '../app/service/localStorageService'
+import EntryService from '../app/service/entryService'
 
 class SearchEntries extends React.Component{
 
@@ -12,46 +13,62 @@ class SearchEntries extends React.Component{
     state = {
         year: '',
         month: '',
-        entryCode: ''
+        entryCode: '',
+        entryStatus: '',
+        description: '',
+        userId: '',
+        entries: []
+    }
+    
+    constructor(){
+        super();
+        this.entryService = new EntryService();
     }
 
-    search = () => {
+    search = () => {               
 
+        if (!this.state.year){
+            toastrErrorMsg('Year is mandatory')
+            return false;        
+        }
+
+        const userLogged = LocalStorageService.getItem('_user_Logged');
+        this.state.userId = userLogged.id;
+
+        const entryFilter = {
+            year: this.state.year,
+            month: this.state.month,
+            entryCode: this.state.entryCode,
+            entryStatus: this.state.entryStatus,
+            description: this.state.description,
+            userId: this.state.userId        
+        }
+        
+        console.log(entryFilter)
+
+        this.entryService
+            .search(entryFilter)
+            .then( response => {
+                if (response.data == ''){
+                    toastrErrorMsg('Search retrieved no data. Try other filters.')
+                } else {
+                    toastrSuccessMsg('Search finished with success.')
+                }
+                this.setState({entries: response.data})
+            }).catch(error => {
+                console.log("did not retrieve the search")
+                console.error(error.response)
+            })
     }
-
 
     navigateSearch = () => {
-        this.props.history.push('/search')
+        this.props.history.push('/entries')
     }
 
-    render(){
-            
-        
-        const entries = [
-            { id: 1, description: 'salary', value: 10000, entryCode: 'INCOME', month: 6, year: 2021, entryStatus: 'APPROVED' }
-        ]
+    render() {        
+        const months = this.entryService.getMonthsList();
 
-        const months = [
-            { label: 'Choose the month to search...', value: ''},
-            { label: 'January', value: 1},
-            { label: 'February', value: 2},
-            { label: 'March', value: 3},
-            { label: 'April', value: 4},
-            { label: 'May', value: 5},
-            { label: 'June', value: 6},
-            { label: 'July', value: 7},
-            { label: 'August', value: 8},
-            { label: 'September', value: 9},
-            { label: 'October', value: 10},
-            { label: 'November', value: 11},
-            { label: 'December', value: 12}
-        ]
-
-        const entryTypes = [
-            { label: 'Choose the entry type to search...', value: ''},
-            { label: 'Income', value: 'INCOME'},
-            { label: 'Outcome', value: 'OUTCOME'}
-        ]
+        const entryTypes = this.entryService.getEntryTypes();
 
         return (         
         <Card title="Entries">
@@ -60,15 +77,38 @@ class SearchEntries extends React.Component{
                     <div className="bs-component">
                         <div className="form-group">
                             <label htmlFor="year" className="form-label mt-4">  Year  </label>
-                            <input type="year" value={this.state.year} onChange={(e) => this.setYear({ name: e.target.value })} className="form-control" id="year" aria-describedby="yearHelp" placeholder="Enter the year to search"/>
+                            <input type="year" 
+                                value={this.state.year} 
+                                onChange={(e) => this.setState({ year: e.target.value })} 
+                                className="form-control" 
+                                id="year" 
+                                placeholder="Enter the year to search"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="month" className="form-label mt-4">  Month  </label>
-                            <SelectMenu className="form-control" list={months} />
+                            <SelectMenu 
+                                className="form-control" 
+                                value={this.state.month}                                 
+                                onChange={(e) => this.setState({ month: e.target.value })} 
+                                list={months} />
                         </div>
                         <div className="form-group">
+                            <label htmlFor="description" className="form-label mt-4">  Description  </label>
+                            <input type="description" 
+                                value={this.state.description} 
+                                onChange={(e) => this.setState({ description: e.target.value })} 
+                                className="form-control" 
+                                id="description" 
+                                placeholder="Enter the description to search"/>
+                        </div>
+
+                        <div className="form-group">
                             <label htmlFor="month" className="form-label mt-4">  Entry type  </label>
-                            <SelectMenu className="form-control" list={entryTypes} />
+                            <SelectMenu 
+                                className="form-control" 
+                                value={this.state.entryCode}                                 
+                                onChange={(e) => this.setState({ entryCode: e.target.value })} 
+                                list={entryTypes} />
                         </div>
                         <button onClick={ this.search } type="button" className="btn btn-info">Search</button>
                         <button onClick={ this.navigateSearch } type="button" className="btn btn-warning">Create new</button>
@@ -79,7 +119,7 @@ class SearchEntries extends React.Component{
             <div className="row">
                 <div className="col-md-12">
                     <div className="bs-component">
-                        <EntriesTable entries={entries} />
+                        <EntriesTable entries={this.state.entries} />
                     </div>
                 </div>
             </div>
