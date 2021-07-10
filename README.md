@@ -9,6 +9,7 @@ install nodejs <br />
 > yarn start <br />
 > yarn add bootswatch <br />
 > yarn add react-router-dom <br />
+> yarn add axios <br />
 
 ### libs
 https://nodejs.org/en/  <br />
