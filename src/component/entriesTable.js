@@ -14,14 +14,30 @@ export default props => {
                 <td>{entry.entryStatus}</td>
                 <td>
                     <button type="button" 
-                            className="btn btn-primary"
+                            className="btn btn-success"
+                            disabled={entry.entryStatus !== 'PENDING'}
+                            title="Aprove entry"
+                            onClick={e => props.updateStatusApprove(entry)}>
+                        <i className="pi pi-thumbs-up"></i> 
+                    </button>
+                    <button type="button" 
+                            className="btn btn-warning"
+                            disabled={entry.entryStatus !== 'PENDING'}
+                            title="Cancel entry"
+                            onClick={e => props.updateStatusReject(entry)}>
+                        <i className="pi pi-thumbs-down"></i> 
+                    </button>
+                    <button type="button" 
+                            className="btn btn-info"
+                            title="Edit entry"
                             onClick={e => props.editRow(entry)}>
-                        Edit
+                        <i className="pi pi-pencil"></i> 
                     </button>
                     <button type="button" 
                             className="btn btn-danger"
+                            title="Delete entry"
                             onClick={e => props.deleteRow(entry)}>
-                        Delete
+                        <i className="pi pi-trash"></i>                        
                     </button>
                 </td>
             </tr>

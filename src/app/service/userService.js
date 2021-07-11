@@ -16,20 +16,20 @@ class UserService extends ApiService {
 
     }
 
-    validate(){
+    validate(user){
         const msgs = []
 
-        if(!this.state.name){
+        if(!user.name){
             msgs.push('Name is mandatory.')
         }
-        if(!this.state.email){
+        if(!user.email){
             msgs.push('Email is mandatory.')
-        } else if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)){
+        } else if(!user.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)){
             msgs.push('Inform a valid email.')
         }
-        if(!this.state.pswd){
+        if(!user.pswd){
             msgs.push('Password is mandatory.')            
-        } else if(this.state.pswd !== this.state.pswd2) {
+        } else if(user.pswd !== user.pswd2) {
             msgs.push('Password did not match. Password and Confirmation must be the same')
         }
 

@@ -20,7 +20,12 @@ class Signup extends React.Component{
     }
 
     signup = () => {
-        const msgs = this.userService.validate();
+        const msgs = this.userService.validate({
+            name: this.state.name,
+            email: this.state.email,
+            pswd: this.state.pswd,
+            pswd2: this.state.pswd2
+        });
         if (msgs && msgs.length > 0){
             msgs.forEach((msg, index) => {
                 toastrErrorMsg(msg)
@@ -69,8 +74,8 @@ class Signup extends React.Component{
                     <input type="password" value={this.state.pswd2} onChange={(e) => this.setState({ pswd2: e.target.value })} className="form-control" id="pswd2" aria-describedby="nameHelp" placeholder="Enter your password again"/>
                 </div>
                 <br />
-                <button onClick={ this.signup } type="button" className="btn btn-info">Signup to My Wallet</button>
-                <button onClick={ this.navigateLogin } type="button" className="btn btn-warning">Cancel</button>
+                <button onClick={ this.signup } type="button" className="btn btn-info"><i className="pi pi-plus"></i> Signup to My Wallet</button>
+                <button onClick={ this.navigateLogin } type="button" className="btn btn-warning"><i className="pi pi-times"></i> Cancel</button>
                 </div>
             </div>
             </div>

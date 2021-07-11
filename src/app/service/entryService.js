@@ -22,6 +22,10 @@ class EntryService extends ApiService {
     update(entry){
         return this.put('/api/entry/v1/update', entry);
     }
+    
+    updateStatus(entry){
+        return this.put('/api/entry/v1/updatestatus', entry);
+    }
 
     findById(id){
         return this.get(`/api/entry/v1/getEntryById/${id}`);
@@ -77,22 +81,22 @@ class EntryService extends ApiService {
 
     }
 
-    validate(){
+    validate(entry){
         const msgs = []
 
-        if(!this.state.description){
+        if(!entry.description){
             msgs.push('Description is mandatory.')
         }
-        if(!this.state.year){
+        if(!entry.year){
             msgs.push('Year is mandatory.')
         }
-        if(!this.state.month){
+        if(!entry.month){
             msgs.push('Month is mandatory.')            
         }
-        if(!this.state.value){
+        if(!entry.value){
             msgs.push('Value is mandatory.')            
         }
-        if(!this.state.entryCode){
+        if(!entry.entryCode){
             msgs.push('Entry type is mandatory.')            
         }
         return msgs;

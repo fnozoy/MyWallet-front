@@ -13,9 +13,9 @@ function Routes(){
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/home" component={Home} />
-                <Route path="/entries" component={Entries} />
-                <Route path="/editEntry/:id" component={EditEntry} />
+                <Route path="/home" component={Home} />                
+                <Route path="/entries" component={Entries} />                
+                <Route path="/editEntry/:id?" component={EditEntry} />
             </Switch>
         </HashRouter>
 

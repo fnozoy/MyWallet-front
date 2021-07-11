@@ -79,6 +79,34 @@ class SearchEntries extends React.Component{
             
     }
 
+    updateStatusApprove = (entry) => {
+        entry.entryStatus = 'APPROVED'
+        this.updateStatus(entry)
+    }
+
+    updateStatusReject = (entry) => {
+        entry.entryStatus = 'CANCELED'
+        this.updateStatus(entry)
+    }
+
+    updateStatus = (entry) => {
+        this.entryService
+            .updateStatus(entry)      
+            .then (response => {
+                const entries = this.state.entries;
+                const index = entries.indexOf(this.state.entryToDelete)
+                if(index !== -1){
+                    entries[index] = entry
+                }                
+                this.setState( { entries: entries, showConfirmDialog: false } )
+                toastrSuccessMsg('Status updated successfully.')
+            })            
+            .catch(error => {
+                toastrErrorMsg('Status update failed!!!')
+            })
+            
+    }
+
     confirmDelete = (entry) => {
         this.setState({showConfirmDialog: true, entryToDelete: entry})
     }
@@ -157,16 +185,17 @@ class SearchEntries extends React.Component{
                     </div>
                 </div>
                 <br />
-                <button onClick={ this.search } type="button" className="btn btn-info">Search</button>
-                <button onClick={ this.navigateEditEntry } type="button" className="btn btn-warning">Create new</button>
+                <button onClick={ this.search } type="button" className="btn btn-info"><i className="pi pi-search"></i>  Search</button>
+                <button onClick={ this.navigateEditEntry } type="button" className="btn btn-warning"><i className="pi pi-plus"></i>  Create new</button>
                 <br />
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
                             <EntriesTable entries={this.state.entries} 
-                                        editRow={this.editRow}  
-                                        deleteRow={this.confirmDelete}
-                                            
+                                          editRow={this.editRow}  
+                                          deleteRow={this.confirmDelete}
+                                          updateStatusApprove={this.updateStatusApprove}  
+                                          updateStatusReject={this.updateStatusReject}  
                             />
                         </div>
                     </div>

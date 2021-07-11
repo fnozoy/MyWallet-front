@@ -5,7 +5,7 @@ function Navbar(){
 
         <div className="navbar navbar-expand-lg fixed-=tp navbar-dark bg-primary">
             <div className="container">
-                <a className="navbar-brand" href="#/home">My Wallet</a>
+                <a className="navbar-brand" href="#/home"> My Wallet </a>
                 <button className="navbar-toggler" type="button" 
                         data-bs-toggle="collapse" data-bs-target="#navbarResponsive" 
                         aria-controls="navbarResponsive" aria-expanded="false" 
@@ -21,7 +21,8 @@ function Navbar(){
                     </ul>    
                     <ul className="navbar-nav ms-md-auto">
                         <li className="nav-item">
-                            <a target="_blank" rel="noopener" className="nav-link" href="https://github.com/fnozoy/"><i className="fa fa-github"></i> GitHub fnozoy </a>
+                            <a target="_blank" rel="noopener" className="nav-link" href="https://github.com/fnozoy/">
+                            <i className="pi pi-github" /> GitHub fnozoy </a>                            
                         </li>
                     </ul>                
                 </div>

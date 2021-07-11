@@ -56,8 +56,8 @@ class Login extends React.Component{
 
                                 <br />
                                 
-                                <button onClick={ this.authenticate } type="button" className="btn btn-info">Login</button>
-                                <button onClick={ this.prepareSignup } type="button" className="btn btn-warning">Signup</button>
+                                <button onClick={ this.authenticate } type="button" className="btn btn-info"><i className="pi pi-key"></i> Login</button>
+                                <button onClick={ this.prepareSignup } type="button" className="btn btn-warning"><i className="pi pi-plus"></i> Signup</button>
 
                                 <div className="row">
                                     <br />

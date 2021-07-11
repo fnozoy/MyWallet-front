@@ -25,6 +25,7 @@ class EditEntry extends React.Component {
 
     componentDidMount(){
         const params = this.props.match.params        
+        console.log('entrei? params', params)
         if(params.id){
             this.entryService.findById(params.id)
                 .then(response => {                    
@@ -44,7 +45,13 @@ class EditEntry extends React.Component {
         const userLogged = LocalStorageService.getItem('_user_Logged');
         this.state.userId = userLogged.id;
 
-        const msgs = this.entryService.validate();
+        const msgs = this.entryService.validate({
+            description: this.state.description,
+            year: this.state.year,
+            month: this.state.month,
+            value: this.state.value,
+            entryCode: this.state.entryCode,
+        });
         if (msgs && msgs.length > 0){
             msgs.forEach((msg, index) => {
                 toastrErrorMsg(msg)
@@ -153,8 +160,8 @@ class EditEntry extends React.Component {
                     </div>
                 </div>
                 <br />
-                <button onClick={ this.save } type="button" className="btn btn-info">Save</button>
-                <button onClick={ this.cancel } type="button" className="btn btn-warning">Cancel</button>
+                <button onClick={ this.save } type="button" className="btn btn-info"><i className="pi pi-save"></i>  Save</button>
+                <button onClick={ this.cancel } type="button" className="btn btn-warning"><i className="pi pi-times"></i>  Cancel</button>
             </Card>
         )
     }
