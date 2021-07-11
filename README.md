@@ -1,5 +1,5 @@
 # MyWallet-front
-front in React JS
+Front in React JS consuming MyWallet APIs
 
 ### `Installation tips`<br />
 install nodejs <br />
@@ -14,8 +14,11 @@ install nodejs <br />
 > yarn add currency-formatter <br />
 yarn add primereact primeicons classnames reac-transition-group <br />
 
+### `build to deploy`
+I use heroku
 
-### libs
+
+### `libs`
 https://nodejs.org/en/  <br />
 https://reactjs.org/ <br />
 https://bootswatch.com/ <br />
