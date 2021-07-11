@@ -5,6 +5,7 @@ import SelectMenu from '../component/selectMenu'
 import { toastrErrorMsg, toastrSuccessMsg } from '../component/toastr'
 import LocalStorageService from '../app/service/localStorageService'
 import EntryService from '../app/service/entryService'
+import { AuthContext } from '../main/authenticationProvider'
 
 class EditEntry extends React.Component {
 
@@ -25,7 +26,6 @@ class EditEntry extends React.Component {
 
     componentDidMount(){
         const params = this.props.match.params        
-        console.log('entrei? params', params)
         if(params.id){
             this.entryService.findById(params.id)
                 .then(response => {                    
@@ -42,7 +42,7 @@ class EditEntry extends React.Component {
     }
 
     save = () => {
-        const userLogged = LocalStorageService.getItem('_user_Logged');
+        const userLogged = this.context.userAuthenticated
         this.state.userId = userLogged.id;
 
         const msgs = this.entryService.validate({
@@ -166,4 +166,5 @@ class EditEntry extends React.Component {
         )
     }
 }
+EditEntry.contextType = AuthContext
 export default EditEntry

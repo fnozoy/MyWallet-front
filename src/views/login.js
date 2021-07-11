@@ -5,6 +5,7 @@ import axios from 'axios'
 import UserService from '../app/service/userService';
 import LocalStorageService from '../app/service/localStorageService';
 import { toastrErrorMsg } from '../component/toastr'
+import { AuthContext } from '../main/authenticationProvider'
 
 class Login extends React.Component{
     state = {
@@ -25,7 +26,8 @@ class Login extends React.Component{
             email: this.state.email,
             pswd: this.state.pswd
         }).then( response => {
-            LocalStorageService.addItem("_user_Logged", response.data)
+            LocalStorageService.addItem("_user_Logged", response.data)            
+            this.context.startSession(response.data)
             this.props.history.push('/home')
         }).catch( error => {
             toastrErrorMsg(error.response.data)
@@ -75,5 +77,8 @@ class Login extends React.Component{
   }
 
 }
+
+
+Login.contextType = AuthContext
 
 export default withRouter ( Login )

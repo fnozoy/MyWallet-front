@@ -8,18 +8,19 @@ import Routes from './routes';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
+import AuthenticationProvider from './authenticationProvider'
 
 class App extends React.Component{
   render(){
     return(
-    <>
+    <AuthenticationProvider>
       <Navbar />
       <div className="container">
         <div>
             <Routes />        
         </div>
       </div>
-    </>
+    </AuthenticationProvider>
     )
   }
 }

@@ -8,7 +8,7 @@ import LocalStorageService from '../app/service/localStorageService'
 import EntryService from '../app/service/entryService'
 import { Dialog } from 'primereact/dialog';
 import {Button} from 'primereact/button';
-
+import { AuthContext } from '../main/authenticationProvider'
 
 class SearchEntries extends React.Component{
 
@@ -36,7 +36,7 @@ class SearchEntries extends React.Component{
             return false;        
         }
 
-        const userLogged = LocalStorageService.getItem('_user_Logged');
+        const userLogged = this.context.userAuthenticated
         this.state.userId = userLogged.id;
 
         const entryFilter = {
@@ -213,5 +213,7 @@ class SearchEntries extends React.Component{
     }
 
 }
+
+SearchEntries.contextType = AuthContext
 export default withRouter(SearchEntries);
 

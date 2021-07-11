@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import EntryService from '../app/service/entryService';
 import LocalStorageService from '../app/service/localStorageService';
 import currencyFormatter from 'currency-formatter';
+import { AuthContext } from '../main/authenticationProvider'
 
 class Home extends React.Component{
 
@@ -18,7 +19,7 @@ class Home extends React.Component{
 
     componentDidMount(){
         
-        const userLogged = LocalStorageService.getItem('_user_Logged');
+        const userLogged = this.context.userAuthenticated
         this.state.name = userLogged.name;
 
         this.entryService
@@ -54,4 +55,6 @@ class Home extends React.Component{
         )
     }    
 }
+
+Home.contextType = AuthContext
 export default withRouter ( Home )
