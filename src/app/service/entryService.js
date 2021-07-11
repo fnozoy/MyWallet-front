@@ -15,6 +15,18 @@ class EntryService extends ApiService {
         return this.delete(`/api/entry/v1/delete/${id}`);
     }
 
+    create(entry){
+        return this.post('/v1/create', entry);
+    }
+    
+    update(entry){
+        return this.put('/api/entry/v1/update', entry);
+    }
+
+    findById(id){
+        return this.get(`/api/entry/v1/getEntryById/${id}`);
+    }
+
     search(entryFilter){
         let parameters = `year=${entryFilter.year}&userId=${entryFilter.userId}`
 
@@ -40,7 +52,7 @@ class EntryService extends ApiService {
 
     getMonthsList() {
         return [
-            { label: 'Choose the month to search...', value: ''},
+            { label: 'Choose the month...', value: ''},
             { label: 'January', value: 1},
             { label: 'February', value: 2},
             { label: 'March', value: 3},
@@ -58,13 +70,33 @@ class EntryService extends ApiService {
 
     getEntryTypes() {
         return [
-            { label: 'Choose the entry type to search...', value: ''},
+            { label: 'Choose the entry type...', value: ''},
             { label: 'Income', value: 'INCOME'},
             { label: 'Outcome', value: 'OUTCOME'}
         ]
 
     }
 
+    validate(){
+        const msgs = []
+
+        if(!this.state.description){
+            msgs.push('Description is mandatory.')
+        }
+        if(!this.state.year){
+            msgs.push('Year is mandatory.')
+        }
+        if(!this.state.month){
+            msgs.push('Month is mandatory.')            
+        }
+        if(!this.state.value){
+            msgs.push('Value is mandatory.')            
+        }
+        if(!this.state.entryCode){
+            msgs.push('Entry type is mandatory.')            
+        }
+        return msgs;
+    }
 }
 
 export default EntryService

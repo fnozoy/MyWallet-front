@@ -19,28 +19,8 @@ class Signup extends React.Component{
         this.userService = new UserService();
     }
 
-    validate(){
-        const msgs = []
-
-        if(!this.state.name){
-            msgs.push('Name is mandatory.')
-        }
-        if(!this.state.email){
-            msgs.push('Email is mandatory.')
-        } else if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)){
-            msgs.push('Inform a valid email.')
-        }
-        if(!this.state.pswd){
-            msgs.push('Password is mandatory.')            
-        } else if(this.state.pswd !== this.state.pswd2) {
-            msgs.push('Password did not match. Password and Confirmation must be the same')
-        }
-
-        return msgs;
-    }
-
     signup = () => {
-        const msgs = this.validate();
+        const msgs = this.userService.validate();
         if (msgs && msgs.length > 0){
             msgs.forEach((msg, index) => {
                 toastrErrorMsg(msg)

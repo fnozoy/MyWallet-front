@@ -26,7 +26,6 @@ class Home extends React.Component{
             .then( response => {
                 this.setState({balance: response.data})
             }).catch(error => {
-                console.log("did not find the balance")
                 console.error(error.response)
             })
     }

@@ -25,7 +25,6 @@ class Login extends React.Component{
             email: this.state.email,
             pswd: this.state.pswd
         }).then( response => {
-            console.log(response.data)
             LocalStorageService.addItem("_user_Logged", response.data)
             this.props.history.push('/home')
         }).catch( error => {

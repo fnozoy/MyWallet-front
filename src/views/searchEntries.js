@@ -9,8 +9,8 @@ import EntryService from '../app/service/entryService'
 import { Dialog } from 'primereact/dialog';
 import {Button} from 'primereact/button';
 
-class SearchEntries extends React.Component{
 
+class SearchEntries extends React.Component{
 
     state = {
         year: '',
@@ -48,8 +48,6 @@ class SearchEntries extends React.Component{
             userId: this.state.userId        
         }
         
-        console.log(entryFilter)
-
         this.entryService
             .search(entryFilter)
             .then( response => {
@@ -60,7 +58,6 @@ class SearchEntries extends React.Component{
                 }
                 this.setState({entries: response.data})
             }).catch(error => {
-                console.log("did not retrieve the search")
                 console.error(error.response)            
             })
     }
@@ -91,11 +88,11 @@ class SearchEntries extends React.Component{
     }
 
     editRow = (entry) => {
-        console.log('edit ', entry.id)
+        this.props.history.push(`/editEntry/${entry.id}`) 
     }
 
-    navigateSearch = () => {
-        this.props.history.push('/entries')
+    navigateEditEntry = () => {
+        this.props.history.push('/editEntry')
     }
 
     render() {        
@@ -112,71 +109,77 @@ class SearchEntries extends React.Component{
         );
 
         return (         
-        <Card title="Entries">
-            <div className="row">
-                <div className="col-md-6">
-                    <div className="bs-component">
-                        <div className="form-group">
-                            <label htmlFor="year" className="form-label mt-4">  Year  </label>
-                            <input type="year" 
-                                value={this.state.year} 
-                                onChange={(e) => this.setState({ year: e.target.value })} 
-                                className="form-control" 
-                                id="year" 
-                                placeholder="Enter the year to search"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="month" className="form-label mt-4">  Month  </label>
-                            <SelectMenu 
-                                className="form-control" 
-                                value={this.state.month}                                 
-                                onChange={(e) => this.setState({ month: e.target.value })} 
-                                list={months} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description" className="form-label mt-4">  Description  </label>
-                            <input type="description" 
-                                value={this.state.description} 
-                                onChange={(e) => this.setState({ description: e.target.value })} 
-                                className="form-control" 
-                                id="description" 
-                                placeholder="Enter the description to search"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="month" className="form-label mt-4">  Entry type  </label>
-                            <SelectMenu 
-                                className="form-control" 
-                                value={this.state.entryCode}                                 
-                                onChange={(e) => this.setState({ entryCode: e.target.value })} 
-                                list={entryTypes} />
-                        </div>
-                        <button onClick={ this.search } type="button" className="btn btn-info">Search</button>
-                        <button onClick={ this.navigateSearch } type="button" className="btn btn-warning">Create new</button>
+            <Card title="Entries">
+                <div className="row">
+                    <div className="col-md-6">
+                            <div className="form-group">
+                                <label htmlFor="year" className="form-label mt-4">  Year  </label>
+                                <input type="year" 
+                                    value={this.state.year} 
+                                    onChange={(e) => this.setState({ year: e.target.value })} 
+                                    className="form-control" 
+                                    id="year" 
+                                    placeholder="Enter the year to search"/>
+                            </div>
+                    </div>
+                    <div className="col-md-6">
+                            <div className="form-group">
+                                <label htmlFor="month" className="form-label mt-4">  Month  </label>
+                                <SelectMenu 
+                                    className="form-control" 
+                                    value={this.state.month}                                 
+                                    onChange={(e) => this.setState({ month: e.target.value })} 
+                                    list={months} />
+                            </div>
                     </div>
                 </div>
-            </div>
-            <br />
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="bs-component">
-                        <EntriesTable entries={this.state.entries} 
-                                      editRow={this.editRow}  
-                                      deleteRow={this.confirmDelete}
-                                          
-                        />
+                <div className="row">
+                    <div className="col-md-6">
+                            <div className="form-group">
+                                <label htmlFor="description" className="form-label mt-4">  Description  </label>
+                                <input type="description" 
+                                    value={this.state.description} 
+                                    onChange={(e) => this.setState({ description: e.target.value })} 
+                                    className="form-control" 
+                                    id="description" 
+                                    placeholder="Enter the description to search"/>
+                            </div>
+                    </div>
+                    <div className="col-md-6">
+                            <div className="form-group">
+                                <label htmlFor="entryCode" className="form-label mt-4">  Entry type  </label>
+                                <SelectMenu 
+                                    className="form-control" 
+                                    value={this.state.entryCode}                                 
+                                    onChange={(e) => this.setState({ entryCode: e.target.value })} 
+                                    list={entryTypes} />
+                            </div>
                     </div>
                 </div>
-                <Dialog header="Confirmation" 
-                        visible={this.state.showConfirmDialog} 
-                        footer={confirmDialogFooter} 
-                        style={{width: '50vw'}}
-                        modal={true}
-                        onHide={() => this.setState({showConfirmDialog: false})}>
-                         Are you sure you want to proceed?
-                </Dialog>                
-            </div>
-        </Card>
+                <br />
+                <button onClick={ this.search } type="button" className="btn btn-info">Search</button>
+                <button onClick={ this.navigateEditEntry } type="button" className="btn btn-warning">Create new</button>
+                <br />
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="bs-component">
+                            <EntriesTable entries={this.state.entries} 
+                                        editRow={this.editRow}  
+                                        deleteRow={this.confirmDelete}
+                                            
+                            />
+                        </div>
+                    </div>
+                    <Dialog header="Confirmation" 
+                            visible={this.state.showConfirmDialog} 
+                            footer={confirmDialogFooter} 
+                            style={{width: '50vw'}}
+                            modal={true}
+                            onHide={() => this.setState({showConfirmDialog: false})}>
+                            Are you sure you want to proceed?
+                    </Dialog>                
+                </div>
+            </Card>
         )
     }
 
