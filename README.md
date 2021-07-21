@@ -22,6 +22,6 @@ I use heroku
 https://nodejs.org/en/  <br />
 https://reactjs.org/ <br />
 https://bootswatch.com/ <br />
-https://codeseven.github.io/toastr/
-https://primefaces.org/primereact
-https://react-materialize.github.io/
+https://codeseven.github.io/toastr/ <br />
+https://primefaces.org/primereact <br />
+https://react-materialize.github.io/ <br />
